@@ -5,6 +5,7 @@
 ;;; Author: John Cinnamond
 ;;; Version: 1.0.0
 
+;;; Commentary:
 ;;;
 ;;; See https://github.com/joshcheek/seeing_is_believing for more information
 ;;; about what the gem does. Not that you must install the gem before you can
@@ -16,7 +17,6 @@
 ;;;   <prefix> c    clear seeing is believing output from a file
 ;;;
 ;;; The default prefix is "C-c s"
-;;;
 
 ;;; License:
 
@@ -41,7 +41,7 @@
 ;;; Code:
 (defcustom seeing-is-believing-executable
   "seeing_is_believing"
-  "Name of the seeing_is_believing executable"
+  "Name of the seeing_is_believing executable."
   :type 'string
   :group 'seeing-is-believing)
 
@@ -60,8 +60,9 @@
   "Keymap used for seeing-is-believing minor mode.")
 
 (defun seeing-is-believing-run (&optional flags)
-  (interactive)
-  "Replace the current region (or the whole buffer, if none) with the output of seeing_is_believing."
+  "Run seeing_is_believing on the currently selected buffer or region.
+
+Optional FLAGS are passed to the seeing_is_believing command."
   (interactive)
   (let ((beg (if (region-active-p) (region-beginning) (point-min)))
         (end (if (region-active-p) (region-end) (point-max)))
@@ -70,10 +71,12 @@
     (goto-char origin)))
 
 (defun seeing-is-believing-run-as-xmpfilter ()
+  "Run seeing_is_believing with -x to replicate the behaviour of xmpfilter."
   (interactive)
   (seeing-is-believing-run "-x"))
 
 (defun seeing-is-believing-clear ()
+  "Clear any output from seeing_is_believing from the buffer or region."
   (interactive)
   (seeing-is-believing-run "-c"))
 
