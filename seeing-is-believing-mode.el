@@ -98,4 +98,5 @@ The default prefix is \"C-c s\"
   seeing-is-believing-keymap
   :group 'seeing-is-believing)
 
+(provide 'seeing-is-believing-mode)
 ;;; seeing-is-believing-mode.el ends here
