@@ -1,22 +1,22 @@
 ;;; seeing-is-believing-mode.el --- minor mode for running the seeing-is-believing ruby gem
 
-;;; Copyright 2015 John Cinnamond
+;; Copyright 2015 John Cinnamond
 
-;;; Author: John Cinnamond
-;;; Version: 1.0.0
+;; Author: John Cinnamond
+;; Version: 1.0.0
 
 ;;; Commentary:
-;;;
-;;; See https://github.com/joshcheek/seeing_is_believing for more information
-;;; about what the gem does. Not that you must install the gem before you can
-;;; use this mode (gem install seeing_is_believing).
-;;;
-;;; Once this mode is enabled you can use the following key bindings:
-;;;   <prefix> s    run seeing is believing with default settings
-;;;   <prefix> x    run prefix args with xmpfilter compatability
-;;;   <prefix> c    clear seeing is believing output from a file
-;;;
-;;; The default prefix is "C-c s"
+;;
+;; See https://github.com/joshcheek/seeing_is_believing for more information
+;; about what the gem does. Not that you must install the gem before you can
+;; use this mode (gem install seeing_is_believing).
+;;
+;; Once this mode is enabled you can use the following key bindings:
+;;   <prefix> s    run seeing is believing with default settings
+;;   <prefix> x    run prefix args with xmpfilter compatability
+;;   <prefix> c    clear seeing is believing output from a file
+;;
+;; The default prefix is "C-c s"
 
 ;;; License:
 
@@ -93,7 +93,7 @@ The following keybindings are created:
 
 The default prefix is \"C-c s\"
 "
-  nil ;; initially disabled
+  nil ; initially disabled
   " Seeing-is-believing"
   seeing-is-believing-keymap
   :group 'seeing-is-believing)
