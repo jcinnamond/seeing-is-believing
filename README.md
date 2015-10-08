@@ -13,22 +13,22 @@ Download the package and add it to your load path.
 
 ## Using the package ##
 
-Enable the mode by typing `M-x seeing-is-believing-mode` or by adding
+Enable the mode by typing `M-x seeing-is-believing` or by adding
 something similar to the following to your emacs init file:
 
 ```
-(require 'seeing-is-believing-mode)
-(add-hook 'ruby-mode-hook 'seeing-is-believing-mode)
+(require 'seeing-is-believing)
+(add-hook 'ruby-mode-hook 'seeing-is-believing)
 ```
 
-When the mode is active you can run seeing is believing by typing `C-c
+When the mode is active you can run seeing is believing by typing `C->
 s s`. If you prefer the
 [xmpfilter](https://rubygems.org/gems/rcodetools/versions/0.8.5.0)
 style of explicitly specifying where you want to see the output type
-`C-c s x`. You can clear out the output from seeing is believing by
-typing `C-c s c`.
+`C-> s x`. You can clear out the output from seeing is believing by
+typing `C-> s c`.
 
-You can change the keybinding shortcuts from the default of `C-c s` by
+You can change the keybinding shortcuts from the default of `C-> s` by
 customising the `seeing-is-believing-prefix` variable
 (`M-x set-variable <return> seeing-is-believing-prefix <return>`).
 

@@ -1,4 +1,4 @@
-;;; seeing-is-believing-mode.el --- minor mode for running the seeing-is-believing ruby gem
+;;; seeing-is-believing.el --- minor mode for running the seeing-is-believing ruby gem
 
 ;; Copyright 2015 John Cinnamond
 
@@ -16,7 +16,7 @@
 ;;   <prefix> x    run prefix args with xmpfilter compatability
 ;;   <prefix> c    clear seeing is believing output from a file
 ;;
-;; The default prefix is "C-c s"
+;; The default prefix is "C->"
 
 ;;; License:
 
@@ -39,6 +39,10 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+(defgroup seeing-is-believing nil
+  "Seeing is believing minor mode."
+  :group 'tools)
+
 (defcustom seeing-is-believing-executable
   "seeing_is_believing"
   "Name of the seeing_is_believing executable."
@@ -46,7 +50,7 @@
   :group 'seeing-is-believing)
 
 (defcustom seeing-is-believing-prefix
-  "C-c s"
+  "C->"
   "The prefix for key bindings for running seeing-is-believing commands."
   :type 'string
   :group 'seeing-is-believing)
@@ -80,8 +84,8 @@ Optional FLAGS are passed to the seeing_is_believing command."
   (interactive)
   (seeing-is-believing-run "-c"))
 
-(define-minor-mode seeing-is-believing-mode
-  "Toggle seeing-is-believing mode.
+(define-minor-mode seeing-is-believing
+  "Toggle seeing-is-believing minor mode.
 Seeing is believing is a ruby gem to display the results of evaluating
 each line ruby code inline as a comment. This mode provides some
 functions and keybindings to run it.
@@ -91,12 +95,12 @@ The following keybindings are created:
   <prefix> x    run prefix args with xmpfilter compatability
   <prefix> c    clear seeing is believing output from a file
 
-The default prefix is \"C-c s\"
+The default prefix is \"C->\"
 "
   nil ; initially disabled
   " Seeing-is-believing"
   seeing-is-believing-keymap
   :group 'seeing-is-believing)
 
-(provide 'seeing-is-believing-mode)
+(provide 'seeing-is-believing)
 ;;; seeing-is-believing-mode.el ends here
