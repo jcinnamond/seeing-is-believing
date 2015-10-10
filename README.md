@@ -21,14 +21,14 @@ something similar to the following to your emacs init file:
 (add-hook 'ruby-mode-hook 'seeing-is-believing)
 ```
 
-When the mode is active you can run seeing is believing by typing `C->
-s s`. If you prefer the
+When the mode is active you can run seeing is believing by typing `C-c
+? s`. If you prefer the
 [xmpfilter](https://rubygems.org/gems/rcodetools/versions/0.8.5.0)
 style of explicitly specifying where you want to see the output type
-`C-> s x`. You can clear out the output from seeing is believing by
-typing `C-> s c`.
+`C-c ? x`. You can clear out the output from seeing is believing by
+typing `C-c ? c`.
 
-You can change the keybinding shortcuts from the default of `C-> s` by
+You can change the keybinding shortcuts from the default of `C-c ?` by
 customising the `seeing-is-believing-prefix` variable
 (`M-x set-variable <return> seeing-is-believing-prefix <return>`).
 

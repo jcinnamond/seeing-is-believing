@@ -16,7 +16,7 @@
 ;;   <prefix> x    run prefix args with xmpfilter compatability
 ;;   <prefix> c    clear seeing is believing output from a file
 ;;
-;; The default prefix is "C->"
+;; The default prefix is "C-c ?"
 
 ;;; License:
 
@@ -50,7 +50,7 @@
   :group 'seeing-is-believing)
 
 (defcustom seeing-is-believing-prefix
-  "C->"
+  "C-c ?"
   "The prefix for key bindings for running seeing-is-believing commands."
   :type 'string
   :group 'seeing-is-believing)
@@ -95,7 +95,7 @@ The following keybindings are created:
   <prefix> x    run prefix args with xmpfilter compatability
   <prefix> c    clear seeing is believing output from a file
 
-The default prefix is \"C->\"
+The default prefix is \"C-c ?\"
 "
   nil ; initially disabled
   " Seeing-is-believing"
