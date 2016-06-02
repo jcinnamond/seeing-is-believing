@@ -89,10 +89,9 @@ Optional FLAGS are passed to the seeing_is_believing command."
 (defun seeing-is-believing-mark-current-line-for-xmpfilter ()
   "Add the characters \"# =>\" to the end of the current line in order to mark it for xmpfilter run."
   (interactive)
-  (let ((origin (point)))
+  (save-excursion
     (end-of-line)
-    (insert " # =>")
-    (goto-char origin)))
+    (insert " # =>")))
 
 (define-minor-mode seeing-is-believing
   "Toggle seeing-is-believing minor mode.
