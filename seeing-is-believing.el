@@ -3,7 +3,7 @@
 ;; Copyright 2015 John Cinnamond
 
 ;; Author: John Cinnamond
-;; Version: 1.0.0
+;; Version: 1.1.0
 
 ;;; Commentary:
 ;;
@@ -13,6 +13,7 @@
 ;;
 ;; Once this mode is enabled you can use the following key bindings:
 ;;   <prefix> s    run seeing is believing with default settings
+;;   <prefix> t    tag current line with the xmpfilter marker
 ;;   <prefix> x    run prefix args with xmpfilter compatability
 ;;   <prefix> c    clear seeing is believing output from a file
 ;;
@@ -58,6 +59,7 @@
 (defvar seeing-is-believing-keymap
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd (concat seeing-is-believing-prefix " s")) 'seeing-is-believing-run)
+    (define-key map (kbd (concat seeing-is-believing-prefix " t")) 'seeing-is-believing-mark-current-line-for-xmpfilter)
     (define-key map (kbd (concat seeing-is-believing-prefix " x")) 'seeing-is-believing-run-as-xmpfilter)
     (define-key map (kbd (concat seeing-is-believing-prefix " c")) 'seeing-is-believing-clear)
     map)
@@ -84,6 +86,13 @@ Optional FLAGS are passed to the seeing_is_believing command."
   (interactive)
   (seeing-is-believing-run "-c"))
 
+(defun seeing-is-believing-mark-current-line-for-xmpfilter ()
+  "Add the characters \"# =>\" to the end of the current line in order to mark it for xmpfilter run."
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (insert " # =>")))
+
 (define-minor-mode seeing-is-believing
   "Toggle seeing-is-believing minor mode.
 Seeing is believing is a ruby gem to display the results of evaluating
@@ -92,6 +101,7 @@ functions and keybindings to run it.
 
 The following keybindings are created:
   <prefix> s    run seeing is believing with default settings
+  <prefix> t    tag current line with the xmpfilter marker
   <prefix> x    run prefix args with xmpfilter compatability
   <prefix> c    clear seeing is believing output from a file
 
