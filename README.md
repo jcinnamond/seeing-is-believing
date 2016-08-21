@@ -9,17 +9,7 @@ current region or entire buffer.
 
 Download the package and add it to your load path.
 
-To install from [MELPA](https://melpa.org/), add the following to your `.emacs` or `.emacs.d/init.el`:
-
-```lisp
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
-(package-initialize)
-```
+To install from [MELPA](https://melpa.org/), follow the [instructions in the MELPA readme](https://github.com/melpa/melpa#usage).
 
 Once that's set up, you can run `(package-install 'seeing-is-believing)`
 
