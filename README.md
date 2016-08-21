@@ -9,7 +9,11 @@ current region or entire buffer.
 
 Download the package and add it to your load path.
 
-(Hopefully MELPA coming soon.)
+To install from [MELPA](https://melpa.org/), follow the [instructions in the MELPA readme](https://github.com/melpa/melpa#usage).
+
+Once that's set up, you can run `(package-install 'seeing-is-believing)`
+
+Alternatively, if you use [spacemacs](http://spacemacs.org/), add `seeing-is-believing` to your `dotspacemacs-additional-packages` variable in your `.spacemacs` file and reload your config.
 
 ## Using the package ##
 
