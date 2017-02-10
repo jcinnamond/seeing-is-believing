@@ -36,7 +36,7 @@ You can change the keybinding shortcuts from the default of `C-c ?` by
 customising the `seeing-is-believing-prefix` variable
 (`M-x set-variable <return> seeing-is-believing-prefix <return>`).
 
-You can also customize or set variables that affect how seeing-is-believing
+You can also customize or set variables that affect how `seeing-is-believing`
 operates:
 
 - `seeing-is-believing-executable` can be set to the name of the program file
@@ -50,9 +50,12 @@ operates:
   seconds `seeing-is-believing` runs before it times out or to 0 for no timeout
   (default 0), and
 - `seeing-is-believing-alignment` can be set to one of `'chunk`, `'file`, or
-  `'line'` to change the way `seeing-is-believing` aligns its comments, on a
+  `'line` to change the way `seeing-is-believing` aligns its comments, on a
   chunk-by-chunk basis, across the whole file, or on a line-by-line basis,
   effectively no alignment (default "chunk").
+
+Either use the customize interface to set these, or set them in your `init.el`
+file:
 
 ```lisp
 (setq seeing-is-believing-max-length 150
@@ -60,6 +63,7 @@ operates:
       seeing-is-believing-timeout 10.5
       seeing-is-believing-alignment 'file)
 ```
+
 ## Licence ##
 
 Copyright 2015 John Cinnamond
