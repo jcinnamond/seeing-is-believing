@@ -46,13 +46,13 @@ operates:
 - `seeing-is-believing-max-results` can be set to an integer that limits the
   number of results produced, when `seeing-is-believing` shows multiple results
   per comment (default 10),
-- `seeing-is-believing-timout` can be set to a decimal number for the number of
+- `seeing-is-believing-timeout` can be set to a decimal number for the number of
   seconds `seeing-is-believing` runs before it times out or to 0 for no timeout
   (default 0), and
 - `seeing-is-believing-alignment` can be set to one of `'chunk`, `'file`, or
   `'line` to change the way `seeing-is-believing` aligns its comments, on a
   chunk-by-chunk basis, across the whole file, or on a line-by-line basis,
-  effectively no alignment (default "chunk").
+  effectively no alignment (default `'chunk`).
 
 Either use the customize interface to set these, or set them in your `init.el`
 file:
