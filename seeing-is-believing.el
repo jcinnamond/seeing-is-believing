@@ -3,7 +3,7 @@
 ;; Copyright 2015 John Cinnamond
 
 ;; Author: John Cinnamond
-;; Version: 1.1.0
+;; Version: 1.2.0
 
 ;;; Commentary:
 ;;
@@ -50,6 +50,33 @@
   :type 'string
   :group 'seeing-is-believing)
 
+(defcustom seeing-is-believing-max-length
+  1000
+  "Maximum length of output line, source plus comment."
+  :type 'integer
+  :group 'seeing-is-believing)
+
+(defcustom seeing-is-believing-max-results
+  10
+  "Maximum number of separate results per comment line."
+  :type 'integer
+  :group 'seeing-is-believing)
+
+(defcustom seeing-is-believing-timeout
+  0
+  "Number of seconds before timing out; 0 means no timeout."
+  :type 'number
+  :group 'seeing-is-believing)
+
+(defcustom seeing-is-believing-alignment
+  'chunk
+  "How to align the result comments."
+  :type '(choice
+          (const :tag "each chunk of code is at the same alignment" chunk)
+          (const :tag "the entire file is at the same alignment" file)
+          (const :tag "each line is at its own alignment" line))
+  :group 'seeing-is-believing)
+
 (defcustom seeing-is-believing-prefix
   "C-c ?"
   "The prefix for key bindings for running seeing-is-believing commands."
@@ -73,7 +100,9 @@ Optional FLAGS are passed to the seeing_is_believing command."
   (let ((beg (if (region-active-p) (region-beginning) (point-min)))
         (end (if (region-active-p) (region-end) (point-max)))
         (origin (point)))
-    (shell-command-on-region beg end (concat seeing-is-believing-executable " " flags) nil 'replace)
+    (shell-command-on-region beg end
+                             (concat seeing-is-believing-executable " "
+                                     flags (seeing-is-believing~flags)) nil 'replace)
     (goto-char origin)))
 
 (defun seeing-is-believing-run-as-xmpfilter ()
@@ -92,6 +121,13 @@ Optional FLAGS are passed to the seeing_is_believing command."
   (save-excursion
     (end-of-line)
     (insert " # =>")))
+
+(defun seeing-is-believing~flags ()
+  "Construct flags reflecting custom options"
+  (concat " -d " (format "%d" seeing-is-believing-max-length)
+          " -n " (format "%d" seeing-is-believing-max-results)
+          " -t " (format "%f" seeing-is-believing-timeout)
+          " -s " (format "%s" seeing-is-believing-alignment)))
 
 (define-minor-mode seeing-is-believing
   "Toggle seeing-is-believing minor mode.
