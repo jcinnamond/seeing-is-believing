@@ -8,7 +8,7 @@
 ;;; Commentary:
 ;;
 ;; See https://github.com/joshcheek/seeing_is_believing for more information
-;; about what the gem does. Not that you must install the gem before you can
+;; about what the gem does. Note that you must install the gem before you can
 ;; use this mode (gem install seeing_is_believing).
 ;;
 ;; Once this mode is enabled you can use the following key bindings:
