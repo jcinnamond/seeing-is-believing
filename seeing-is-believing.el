@@ -102,7 +102,9 @@ Optional FLAGS are passed to the seeing_is_believing command."
         (origin (point)))
     (shell-command-on-region beg end
                              (concat seeing-is-believing-executable " "
-                                     flags (seeing-is-believing~flags)) nil 'replace)
+                                     flags (seeing-is-believing~flags))
+                             nil
+                             'replace)
     (goto-char origin)))
 
 (defun seeing-is-believing-run-as-xmpfilter ()
