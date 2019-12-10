@@ -107,6 +107,7 @@
   "Set NEWKEY as the prefix key to activate seeing-is-believing."
   (define-key seeing-is-believing-keymap newkey 'seeing-is-believing-sub-keymap))
 
+;;;###autoload
 (defun seeing-is-believing-run (&optional flags)
   "Run seeing_is_believing on the currently selected buffer or region.
 
@@ -122,16 +123,19 @@ Optional FLAGS are passed to the seeing_is_believing command."
                              'replace)
     (goto-char origin)))
 
+;;;###autoload
 (defun seeing-is-believing-run-as-xmpfilter ()
   "Run seeing_is_believing with -x to replicate the behaviour of xmpfilter."
   (interactive)
   (seeing-is-believing-run "-x"))
 
+;;;###autoload
 (defun seeing-is-believing-clear ()
   "Clear any output from seeing_is_believing from the buffer or region."
   (interactive)
   (seeing-is-believing-run "-c"))
 
+;;;###autoload
 (defun seeing-is-believing-mark-current-line-for-xmpfilter ()
   "Add the characters \"# =>\" to the end of the current line in order to mark it for xmpfilter run."
   (interactive)
@@ -146,6 +150,7 @@ Optional FLAGS are passed to the seeing_is_believing command."
           " -t " (format "%f" seeing-is-believing-timeout)
           " -s " (format "%s" seeing-is-believing-alignment)))
 
+;;;###autoload
 (define-minor-mode seeing-is-believing
   "Toggle seeing-is-believing minor mode.
 Seeing is believing is a ruby gem to display the results of evaluating
