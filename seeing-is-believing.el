@@ -165,9 +165,7 @@ The following keybindings are created:
 
 The default prefix is \"C-c ?\"
 "
-  nil ; initially disabled
-  " Seeing-is-believing"
-  seeing-is-believing-keymap
+  :keymap seeing-is-believing-keymap
   :group 'seeing-is-believing)
 
 (provide 'seeing-is-believing)
