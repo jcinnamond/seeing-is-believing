@@ -78,19 +78,34 @@
   :group 'seeing-is-believing)
 
 (defcustom seeing-is-believing-prefix
-  "C-c ?"
+  (kbd "C-c ?")
   "The prefix for key bindings for running seeing-is-believing commands."
-  :type 'string
+  :type 'key-sequence
+  :set (lambda (sym value)
+         (when (and (bound-and-true-p seeing-is-believing-keymap)
+                    (bound-and-true-p seeing-is-believing-pre-keymap))
+           (seeing-is-believing-set-prefix-key value))
+         (set-default sym value))
   :group 'seeing-is-believing)
 
-(defvar seeing-is-believing-keymap
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd (concat seeing-is-believing-prefix " s")) 'seeing-is-believing-run)
-    (define-key map (kbd (concat seeing-is-believing-prefix " t")) 'seeing-is-believing-mark-current-line-for-xmpfilter)
-    (define-key map (kbd (concat seeing-is-believing-prefix " x")) 'seeing-is-believing-run-as-xmpfilter)
-    (define-key map (kbd (concat seeing-is-believing-prefix " c")) 'seeing-is-believing-clear)
-    map)
+(defvar seeing-is-believing-keymap (make-sparse-keymap)
   "Keymap used for seeing-is-believing minor mode.")
+
+(defvar seeing-is-believing-sub-keymap nil
+  "Sub-keymap used for seeing-is-believing minor mode.")
+
+(define-prefix-command 'seeing-is-believing-sub-keymap)
+(define-key seeing-is-believing-keymap seeing-is-believing-prefix 'seeing-is-believing-sub-keymap)
+
+(let ((map seeing-is-believing-sub-keymap))
+  (define-key map (kbd "s") 'seeing-is-believing-run)
+  (define-key map (kbd "t") 'seeing-is-believing-mark-current-line-for-xmpfilter)
+  (define-key map (kbd "x") 'seeing-is-believing-run-as-xmpfilter)
+  (define-key map (kbd "c") 'seeing-is-believing-clear))
+
+(defun seeing-is-believing-set-prefix-key (newkey)
+  "Set NEWKEY as the prefix key to activate seeing-is-believing."
+  (define-key seeing-is-believing-keymap newkey 'seeing-is-believing-sub-keymap))
 
 (defun seeing-is-believing-run (&optional flags)
   "Run seeing_is_believing on the currently selected buffer or region.
