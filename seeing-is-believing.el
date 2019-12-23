@@ -107,6 +107,9 @@
   "Set NEWKEY as the prefix key to activate seeing-is-believing."
   (define-key seeing-is-believing-keymap newkey 'seeing-is-believing-sub-keymap))
 
+(defvar seeing-is-believing-before-run-hooks '())
+(defvar seeing-is-believing-after-run-hooks '())
+
 ;;;###autoload
 (defun seeing-is-believing-run (&optional flags)
   "Run seeing_is_believing on the currently selected buffer or region.
@@ -116,12 +119,14 @@ Optional FLAGS are passed to the seeing_is_believing command."
   (let ((beg (if (region-active-p) (region-beginning) (point-min)))
         (end (if (region-active-p) (region-end) (point-max)))
         (origin (point)))
+    (run-hooks 'seeing-is-believing-before-run-hooks)
     (shell-command-on-region beg end
                              (concat seeing-is-believing-executable " "
                                      flags (seeing-is-believing~flags))
                              nil
                              'replace)
-    (goto-char origin)))
+    (goto-char origin)
+    (run-hooks 'seeing-is-believing-after-run-hooks)))
 
 ;;;###autoload
 (defun seeing-is-believing-run-as-xmpfilter ()
