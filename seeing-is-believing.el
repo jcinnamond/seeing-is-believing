@@ -8,7 +8,7 @@
 ;;; Commentary:
 ;;
 ;; See https://github.com/joshcheek/seeing_is_believing for more information
-;; about what the gem does. Not that you must install the gem before you can
+;; about what the gem does. Note that you must install the gem before you can
 ;; use this mode (gem install seeing_is_believing).
 ;;
 ;; Once this mode is enabled you can use the following key bindings:
@@ -50,6 +50,12 @@
   :type 'string
   :group 'seeing-is-believing)
 
+(defcustom seeing-is-believing-extra-flags
+  ""
+  "Extra flags to pass to seeing_is_believing executable."
+  :type 'string
+  :group 'seeing-is-believing)
+
 (defcustom seeing-is-believing-max-length
   1000
   "Maximum length of output line, source plus comment."
@@ -78,20 +84,39 @@
   :group 'seeing-is-believing)
 
 (defcustom seeing-is-believing-prefix
-  "C-c ?"
+  (kbd "C-c ?")
   "The prefix for key bindings for running seeing-is-believing commands."
-  :type 'string
+  :type 'key-sequence
+  :set (lambda (sym value)
+         (when (and (bound-and-true-p seeing-is-believing-keymap)
+                    (bound-and-true-p seeing-is-believing-pre-keymap))
+           (seeing-is-believing-set-prefix-key value))
+         (set-default sym value))
   :group 'seeing-is-believing)
 
-(defvar seeing-is-believing-keymap
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd (concat seeing-is-believing-prefix " s")) 'seeing-is-believing-run)
-    (define-key map (kbd (concat seeing-is-believing-prefix " t")) 'seeing-is-believing-mark-current-line-for-xmpfilter)
-    (define-key map (kbd (concat seeing-is-believing-prefix " x")) 'seeing-is-believing-run-as-xmpfilter)
-    (define-key map (kbd (concat seeing-is-believing-prefix " c")) 'seeing-is-believing-clear)
-    map)
+(defvar seeing-is-believing-keymap (make-sparse-keymap)
   "Keymap used for seeing-is-believing minor mode.")
 
+(defvar seeing-is-believing-sub-keymap nil
+  "Sub-keymap used for seeing-is-believing minor mode.")
+
+(define-prefix-command 'seeing-is-believing-sub-keymap)
+(define-key seeing-is-believing-keymap seeing-is-believing-prefix 'seeing-is-believing-sub-keymap)
+
+(let ((map seeing-is-believing-sub-keymap))
+  (define-key map (kbd "s") 'seeing-is-believing-run)
+  (define-key map (kbd "t") 'seeing-is-believing-mark-current-line-for-xmpfilter)
+  (define-key map (kbd "x") 'seeing-is-believing-run-as-xmpfilter)
+  (define-key map (kbd "c") 'seeing-is-believing-clear))
+
+(defun seeing-is-believing-set-prefix-key (newkey)
+  "Set NEWKEY as the prefix key to activate seeing-is-believing."
+  (define-key seeing-is-believing-keymap newkey 'seeing-is-believing-sub-keymap))
+
+(defvar seeing-is-believing-before-run-hooks '())
+(defvar seeing-is-believing-after-run-hooks '())
+
+;;;###autoload
 (defun seeing-is-believing-run (&optional flags)
   "Run seeing_is_believing on the currently selected buffer or region.
 
@@ -100,21 +125,28 @@ Optional FLAGS are passed to the seeing_is_believing command."
   (let ((beg (if (region-active-p) (region-beginning) (point-min)))
         (end (if (region-active-p) (region-end) (point-max)))
         (origin (point)))
+    (run-hooks 'seeing-is-believing-before-run-hooks)
     (shell-command-on-region beg end
                              (concat seeing-is-believing-executable " "
-                                     flags (seeing-is-believing~flags)) nil 'replace)
-    (goto-char origin)))
+                                     flags (seeing-is-believing~flags))
+                             nil
+                             'replace)
+    (goto-char origin)
+    (run-hooks 'seeing-is-believing-after-run-hooks)))
 
+;;;###autoload
 (defun seeing-is-believing-run-as-xmpfilter ()
   "Run seeing_is_believing with -x to replicate the behaviour of xmpfilter."
   (interactive)
   (seeing-is-believing-run "-x"))
 
+;;;###autoload
 (defun seeing-is-believing-clear ()
   "Clear any output from seeing_is_believing from the buffer or region."
   (interactive)
   (seeing-is-believing-run "-c"))
 
+;;;###autoload
 (defun seeing-is-believing-mark-current-line-for-xmpfilter ()
   "Add the characters \"# =>\" to the end of the current line in order to mark it for xmpfilter run."
   (interactive)
@@ -126,9 +158,11 @@ Optional FLAGS are passed to the seeing_is_believing command."
   "Construct flags reflecting custom options"
   (concat " -d " (format "%d" seeing-is-believing-max-length)
           " -n " (format "%d" seeing-is-believing-max-results)
-          " -t " (format "%f" seeing-is-believing-timeout)
-          " -s " (format "%s" seeing-is-believing-alignment)))
+          " -t " (format "%.1f" seeing-is-believing-timeout)
+          " -s " (format "%s" seeing-is-believing-alignment)
+          " "    seeing-is-believing-extra-flags))
 
+;;;###autoload
 (define-minor-mode seeing-is-believing
   "Toggle seeing-is-believing minor mode.
 Seeing is believing is a ruby gem to display the results of evaluating
@@ -143,9 +177,7 @@ The following keybindings are created:
 
 The default prefix is \"C-c ?\"
 "
-  nil ; initially disabled
-  " Seeing-is-believing"
-  seeing-is-believing-keymap
+  :keymap seeing-is-believing-keymap
   :group 'seeing-is-believing)
 
 (provide 'seeing-is-believing)
