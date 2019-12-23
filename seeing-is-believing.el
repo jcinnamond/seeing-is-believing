@@ -50,6 +50,12 @@
   :type 'string
   :group 'seeing-is-believing)
 
+(defcustom seeing-is-believing-extra-flags
+  ""
+  "Extra flags to pass to seeing_is_believing executable."
+  :type 'string
+  :group 'seeing-is-believing)
+
 (defcustom seeing-is-believing-max-length
   1000
   "Maximum length of output line, source plus comment."
@@ -152,8 +158,9 @@ Optional FLAGS are passed to the seeing_is_believing command."
   "Construct flags reflecting custom options"
   (concat " -d " (format "%d" seeing-is-believing-max-length)
           " -n " (format "%d" seeing-is-believing-max-results)
-          " -t " (format "%f" seeing-is-believing-timeout)
-          " -s " (format "%s" seeing-is-believing-alignment)))
+          " -t " (format "%.1f" seeing-is-believing-timeout)
+          " -s " (format "%s" seeing-is-believing-alignment)
+          " "    seeing-is-believing-extra-flags))
 
 ;;;###autoload
 (define-minor-mode seeing-is-believing
